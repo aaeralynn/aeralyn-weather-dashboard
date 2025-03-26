@@ -1,8 +1,9 @@
-Weather Dashboard
-Description
+#Weather Dashboard
+
+##Description
 The Weather Dashboard is a web application that allows users to search for a city and retrieve current and future weather conditions. Utilizing the OpenWeather API, the dashboard provides users with an intuitive interface to view weather data, including temperature, humidity, wind speed, and a 5-day forecast. Additionally, users can access their search history to quickly view weather information for previously searched cities.
 
-Features
+##Features
 Search for current weather conditions by city name.
 View a 5-day weather forecast for the selected city.
 Display current weather details, including:
@@ -14,7 +15,8 @@ Temperature
 Humidity
 Wind speed
 Maintain a search history to easily revisit previously searched cities.
-Technologies Used
+
+##Technologies Used
 HTML
 CSS
 JavaScript
@@ -22,7 +24,8 @@ Express.js (Node.js framework)
 OpenWeather API
 Axios (for making HTTP requests)
 Local Storage (for saving search history)
-Acceptance Criteria
+
+##Acceptance Criteria
 Search Functionality: Users can input a city name and retrieve current and future weather conditions. The city is added to the search history.
 Current Weather Display: The application presents the following information for the searched city:
 City name
@@ -39,7 +42,8 @@ Temperature
 Wind speed
 Humidity
 Search History: Users can click on a city in the search history to view the current and future weather conditions for that city again.
-Installation
+
+##Installation
 Clone the repository:
 git clone https://github.com/yourusername/weather-dashboard.git
 Navigate to the project directory:
@@ -48,7 +52,8 @@ Install the required dependencies:
 npm install
 Create a .env file in the root directory and add your OpenWeather API key:
 OPENWEATHER_API_KEY=your_api_key_here
-Usage
+
+##Usage
 Start the server:
 npm start
 Open your web browser and navigate to http://localhost:3000.
