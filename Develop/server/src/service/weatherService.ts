@@ -35,9 +35,8 @@ class WeatherService {
 
   // Create fetchLocationData method
   private async fetchLocationData(query: string): Promise<Coordinates> {
-    const response = await fetch(
-      `${this.baseURL}/weather?q=${query}&appid=${this.apiKey}`
-    );
+    const url = this.buildGeocodeQuery(query); // Use the buildGeocodeQuery method
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error("Failed to fetch location data");
     }
