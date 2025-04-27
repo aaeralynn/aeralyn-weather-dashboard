@@ -1,17 +1,20 @@
-import dotenv from "dotenv";
+// Import required packages
 import express from "express";
-import path from "path"; // Import path for serving static files
+import path from "path";
+import dotenv from "dotenv";
+import routes from "./routes";
+
+// Initialize dotenv to load .env variables
 dotenv.config();
 
-// Import the routes
-import routes from "./routes/index.js";
-
+// Create an instance of Express
 const app = express();
 
+// Define PORT (from .env or fallback to 3001)
 const PORT = process.env.PORT || 3001;
 
 // Serve static files from the client dist folder
-app.use(express.static(path.join(__dirname, "dist"))); // Adjust the path as necessary
+app.use(express.static(path.join(__dirname, "../dist")));
 
 // Implement middleware for parsing JSON and urlencoded form data
 app.use(express.json()); // For parsing application/json

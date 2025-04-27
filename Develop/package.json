@@ -19,6 +19,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.15.2",
     "concurrently": "^8.2.2",
     "nodemon": "^3.1.10",
     "wait-on": "^7.2.0"
@@ -28,6 +30,7 @@
     "bootstrap": "^5.3.3",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "typescript": "^5.8.3",
     "uuid": "^11.1.0"
   }
 }
