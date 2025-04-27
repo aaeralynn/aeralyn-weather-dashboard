@@ -2,7 +2,8 @@
 import express from "express";
 import path from "path";
 import dotenv from "dotenv";
-import routes from "./routes";
+import routes from "./routes/index"; // Import the index routes (which include htmlRoutes and apiRoutes)
+import weatherRoutes from "./routes/weatherRoutes";
 // Initialize dotenv to load .env variables
 dotenv.config();
 // Create an instance of Express
@@ -15,6 +16,7 @@ app.use(express.static(path.join(__dirname, "../dist")));
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
 // Implement middleware to connect the routes
-app.use(routes);
+app.use(routes); // This connects both HTML and API routes (including weatherRoutes if it's part of the API)
+app.use("/weather", weatherRoutes); // Add the weatherRoutes API under a `/weather` path (or change this if needed)
 // Start the server on the port
 app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
