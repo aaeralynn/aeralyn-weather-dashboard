@@ -3,7 +3,7 @@ import express from "express";
 import path from "path";
 import dotenv from "dotenv";
 import routes from "./routes/index"; // Import the index routes (which include htmlRoutes and apiRoutes)
-import weatherRoutes from "./routes/weatherRoutes";
+import weatherRoutes from "./routes/weatherRoutes"; // Import the weatherRoutes
 // Initialize dotenv to load .env variables
 dotenv.config();
 // Create an instance of Express
