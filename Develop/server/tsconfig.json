@@ -1,14 +1,9 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    /* Modules */
     "rootDir": "src" /* Specify the root folder within your source files. */,
-
-    /* Emit */
-    "outDir": "dist" /* Specify an output folder for all emitted files. */,
-
-    /* Include Node.js types */
-    "types": ["node"] /* Add this line to include Node.js types */
+    "outDir": "../dist/server" /* Output compiled files to a dist/server folder */,
+    "types": ["node"] /* Ensure Node.js types are included */
   },
-  "include": ["src/**/*"] /* Ensure this includes all relevant source files */
+  "include": ["src/**/*"] /* Include all source files in the server directory */
 }

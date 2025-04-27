@@ -5,7 +5,7 @@ import WeatherService from "../../service/weatherService";
 const router = Router();
 
 // POST Request to retrieve weather data by city name
-router.post("/", async (req: Request, res: Response) => {
+router.post("/", async (req: Request, res: Response): Promise<Response> => {
   const city: string = req.body.city;
 
   if (!city) {
@@ -35,36 +35,42 @@ router.post("/", async (req: Request, res: Response) => {
 });
 
 // GET route to fetch search history
-router.get("/history", async (req: Request, res: Response) => {
-  try {
-    const history = await HistoryService.getCities();
-    return res.status(200).json(history);
-  } catch (error) {
-    console.error("Error retrieving search history:", error);
-    return res.status(500).json({ error: "Error retrieving search history" });
+router.get(
+  "/history",
+  async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const history = await HistoryService.getCities();
+      return res.status(200).json(history);
+    } catch (error) {
+      console.error("Error retrieving search history:", error);
+      return res.status(500).json({ error: "Error retrieving search history" });
+    }
   }
-});
+);
 
 // DELETE route to remove city from search history
-router.delete("/history/:id", async (req: Request, res: Response) => {
-  const { id } = req.params;
+router.delete(
+  "/history/:id",
+  async (req: Request, res: Response): Promise<Response> => {
+    const { id } = req.params;
 
-  try {
-    const result = await HistoryService.removeCity(id);
+    try {
+      const result = await HistoryService.removeCity(id);
 
-    if (result === undefined) {
+      if (result === undefined) {
+        return res
+          .status(404)
+          .json({ error: "City not found in search history" });
+      }
+
+      return res.status(204).send(); // No content response
+    } catch (error) {
+      console.error("Error deleting city from search history:", error);
       return res
-        .status(404)
-        .json({ error: "City not found in search history" });
+        .status(500)
+        .json({ error: "Error deleting city from search history" });
     }
-
-    return res.status(204).send(); // No content response
-  } catch (error) {
-    console.error("Error deleting city from search history:", error);
-    return res
-      .status(500)
-      .json({ error: "Error deleting city from search history" });
   }
-});
+);
 
 export default router;
