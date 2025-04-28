@@ -60,4 +60,6 @@ class HistoryService {
         await this.write(cities);
     }
 }
-export default new HistoryService();
+// Export the single instance of the HistoryService class
+const historyService = new HistoryService();
+export default historyService;

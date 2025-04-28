@@ -65,4 +65,6 @@ class HistoryService {
   }
 }
 
-export default new HistoryService();
+// Export the single instance of the HistoryService class
+const historyService = new HistoryService();
+export default historyService;
