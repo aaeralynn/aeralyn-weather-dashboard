@@ -1,5 +1,9 @@
 import fs from "fs/promises";
 import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Define a City class with name and id properties
 class City {
@@ -22,7 +26,7 @@ class HistoryService {
       return JSON.parse(data) as City[];
     } catch (error) {
       console.error("Error reading search history:", error);
-      return [];
+      return []; // Return an empty array if there's an error
     }
   }
 
@@ -37,7 +41,12 @@ class HistoryService {
 
   // Define a getCities method that reads the cities from the searchHistory.json file and returns them as an array of City objects
   async getCities(): Promise<City[]> {
-    return await this.read();
+    try {
+      return await this.read();
+    } catch (error) {
+      console.error("Error fetching cities:", error);
+      return []; // In case of error, return an empty array
+    }
   }
 
   // Define an addCity method that adds a city to the searchHistory.json file
@@ -56,4 +65,6 @@ class HistoryService {
   }
 }
 
-export default new HistoryService();
+// Export the single instance of the HistoryService class
+const historyService = new HistoryService();
+export default historyService;
