@@ -24,7 +24,7 @@ class HistoryService {
         }
         catch (error) {
             console.error("Error reading search history:", error);
-            return [];
+            return []; // Return an empty array if there's an error
         }
     }
     // Define a write method that writes the updated cities array to the searchHistory.json file
@@ -38,7 +38,13 @@ class HistoryService {
     }
     // Define a getCities method that reads the cities from the searchHistory.json file and returns them as an array of City objects
     async getCities() {
-        return await this.read();
+        try {
+            return await this.read();
+        }
+        catch (error) {
+            console.error("Error fetching cities:", error);
+            return []; // In case of error, return an empty array
+        }
     }
     // Define an addCity method that adds a city to the searchHistory.json file
     async addCity(cityName) {

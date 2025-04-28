@@ -3,15 +3,16 @@ import HistoryService from "../service/historyService";
 import WeatherService from "../service/weatherService";
 const router = Router();
 // POST Request to retrieve weather data by city name
-router.post("/", async (req, // 'req' is used here
+router.post("/weather", // Updated route to match client-side fetch
+async (req, // Update city parameter name to match client
 res) => {
-    const { city } = req.body;
-    if (!city) {
+    const { cityName } = req.body; // Access the cityName from the request body
+    if (!cityName) {
         return res.status(400).json({ error: "City name is required" });
     }
     try {
         // Get weather data for the city
-        const weatherData = await WeatherService.getWeatherForCity(city);
+        const weatherData = await WeatherService.getWeatherForCity(cityName);
         // Check if weather data was found
         if (!weatherData) {
             return res
@@ -19,9 +20,9 @@ res) => {
                 .json({ error: "Weather data not found for the specified city" });
         }
         // Save the city to search history
-        await HistoryService.addCity(city);
+        await HistoryService.addCity(cityName);
         // Respond with the weather data
-        return res.status(200).json({ weather: weatherData });
+        return res.status(200).json([weatherData]); // Wrap the data in an array like the client expects
     }
     catch (error) {
         console.error("Error retrieving weather data:", error);
@@ -29,8 +30,8 @@ res) => {
     }
 });
 // GET route to fetch search history
-router.get("/history", async (_, res) => {
-    // 'req' is not used, so use '_'
+router.get("/weather/history", async (_, res) => {
+    // Updated route for history
     try {
         const history = await HistoryService.getCities();
         return res.status(200).json(history);
@@ -41,8 +42,8 @@ router.get("/history", async (_, res) => {
     }
 });
 // DELETE route to remove city from search history
-router.delete("/history/:id", async (req, res) => {
-    // 'req' is used here
+router.delete("/weather/history/:id", // Updated route for history deletion
+async (req, res) => {
     const { id } = req.params;
     try {
         const result = await HistoryService.removeCity(id);

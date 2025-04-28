@@ -8,18 +8,18 @@ const router = Router();
 router.post(
   "/",
   async (
-    req: Request<{}, {}, { city: string }>, // 'req' is used here
+    req: Request<{}, {}, { cityName: string }>, // 'req' is used here
     res: Response
   ): Promise<Response> => {
-    const { city } = req.body;
+    const { cityName } = req.body;
 
-    if (!city) {
+    if (!cityName) {
       return res.status(400).json({ error: "City name is required" });
     }
 
     try {
       // Get weather data for the city
-      const weatherData = await WeatherService.getWeatherForCity(city);
+      const weatherData = await WeatherService.getWeatherForCity(cityName);
 
       // Check if weather data was found
       if (!weatherData) {
@@ -29,10 +29,10 @@ router.post(
       }
 
       // Save the city to search history
-      await HistoryService.addCity(city);
+      await HistoryService.addCity(cityName);
 
       // Respond with the weather data
-      return res.status(200).json({ weather: weatherData });
+      return res.status(200).json([weatherData]); // Send an array with the current weather
     } catch (error) {
       console.error("Error retrieving weather data:", error);
       return res.status(500).json({ error: "Error retrieving weather data" });
@@ -42,7 +42,6 @@ router.post(
 
 // GET route to fetch search history
 router.get("/history", async (_: Request, res: Response): Promise<Response> => {
-  // 'req' is not used, so use '_'
   try {
     const history = await HistoryService.getCities();
     return res.status(200).json(history);
@@ -56,7 +55,6 @@ router.get("/history", async (_: Request, res: Response): Promise<Response> => {
 router.delete(
   "/history/:id",
   async (req: Request<{ id: string }>, res: Response): Promise<Response> => {
-    // 'req' is used here
     const { id } = req.params;
 
     try {

@@ -1,22 +1,16 @@
-// Import required packages
 import express from "express";
 import path from "path";
 import dotenv from "dotenv";
-import routes from "./routes/index"; // Import the index routes (which include htmlRoutes and apiRoutes)
-import weatherRoutes from "./routes/weatherRoutes"; // Import the weatherRoutes
-// Initialize dotenv to load .env variables
+import routes from "./routes/index";
 dotenv.config();
-// Create an instance of Express
 const app = express();
-// Define PORT (from .env or fallback to 3001)
 const PORT = process.env.PORT || 3001;
-// Serve static files from the client dist folder
+// Serve static files
 app.use(express.static(path.join(__dirname, "../dist")));
-// Implement middleware for parsing JSON and urlencoded form data
-app.use(express.json()); // For parsing application/json
-app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
-// Implement middleware to connect the routes
-app.use(routes); // This connects both HTML and API routes (including weatherRoutes if it's part of the API)
-app.use("/weather", weatherRoutes); // Add the weatherRoutes API under a `/weather` path (or change this if needed)
-// Start the server on the port
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+// Routes
+app.use(routes);
+// Start server
 app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
